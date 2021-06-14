@@ -13,6 +13,12 @@ platforms:
     memory: 1024
     groups:
       - kube_control_plane
+  - name: ubuntu2004
+    box: generic/ubuntu2004
+    cpus: 2
+    memory: 1024
+    groups:
+      - kube_control_plane
   - name: centos7
     box: centos/7
     cpus: 2
@@ -25,8 +31,14 @@ platforms:
     memory: 1024
     groups:
       - kube_control_plane
-  - name: fedora
+  - name: fedora33
     box: fedora/33-cloud-base
+    cpus: 2
+    memory: 1024
+    groups:
+      - kube_control_plane
+  - name: fedora34
+    box: fedora/34-cloud-base
     cpus: 2
     memory: 1024
     groups:
