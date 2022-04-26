@@ -4,6 +4,8 @@
     external_apiserver_address: >-
       {%- if loadbalancer_apiserver is defined and loadbalancer_apiserver.address is defined -%}
       {{ loadbalancer_apiserver.address }}
+      {%- elif kubeconfig_localhost_ansible_host is defined and kubeconfig_localhost_ansible_host -%}
+      {{ hostvars[groups['kube_control_plane'][0]].ansible_host }}
       {%- else -%}
       {{ kube_apiserver_access_address }}
       {%- endif -%}
@@ -106,6 +108,9 @@
     dest: "{{ artifacts_dir }}/kubectl"
     flat: yes
     validate_checksum: no
+  register: copy_binary_result
+  until: copy_binary_result is not failed
+  retries: 20
   become: no
   run_once: yes
   when: kubectl_localhost
